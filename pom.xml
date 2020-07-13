@@ -18,13 +18,20 @@
     </modules>
 
     <properties>
+        <jdk.version>1.8</jdk.version>
         <jackson.version>2.10.0</jackson.version>
-        <lombok.version>1.16.18</lombok.version>
-        <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
+        <lombok.version>1.18.12</lombok.version>
+        <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
         <dubbo.version>3.0.1</dubbo.version>
         <zookeeper.version>3.6.1</zookeeper.version>
         <zkclient.version>0.10</zkclient.version>
         <javassist.version>3.18.2-GA</javassist.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <java-jwt.version>3.10.0</java-jwt.version>
+        <commons-lang3.version>3.8.1</commons-lang3.version>
+        <postgresql-driver.version>42.2.8</postgresql-driver.version>
+        <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>2.19.1</maven.surefire.plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -40,6 +47,8 @@
                 <version>${lombok.version}</version>
                 <optional>true</optional>
             </dependency>
+
+            <!-- Spring Boot 相关依赖 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -50,6 +59,22 @@
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-mongodb</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
             <!-- Dubbo依赖 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -83,7 +108,99 @@
                 <artifactId>netty</artifactId>
                 <version>3.10.6.Final</version>
             </dependency>
+
+            <!-- JWT 相关依赖 -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${java-jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql-driver.version}</version>
+                <scope>runtime</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <!--============== 配置Artifactory私服START =============== -->
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>distcentral</id>
+            <name>libs-release</name>
+            <url>http://elb-791125809.cn-northwest-1.elb.amazonaws.com.cn:5336/artifactory/libs-release</url>
+        </repository>
+        <repository>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+            <id>distsnapshots</id>
+            <name>libs-snapshot</name>
+            <url>http://elb-791125809.cn-northwest-1.elb.amazonaws.com.cn:5336/artifactory/libs-snapshot</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>distcentral</id>
+            <name>libs-release</name>
+            <url>http://elb-791125809.cn-northwest-1.elb.amazonaws.com.cn:5336/artifactory/libs-release</url>
+        </pluginRepository>
+        <pluginRepository>
+            <snapshots/>
+            <id>distsnapshots</id>
+            <name>libs-snapshot</name>
+            <url>http://elb-791125809.cn-northwest-1.elb.amazonaws.com.cn:5336/artifactory/libs-snapshot</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <distributionManagement>
+        <repository>
+            <id>distcentral</id>
+            <url>http://elb-791125809.cn-northwest-1.elb.amazonaws.com.cn:5336/artifactory/releases-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>distsnapshots</id>
+            <url>http://elb-791125809.cn-northwest-1.elb.amazonaws.com.cn:5336/artifactory/snapshots-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <!--============== 配置Artifactory私服End =============== -->
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <!--maven打包跳过测试-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
