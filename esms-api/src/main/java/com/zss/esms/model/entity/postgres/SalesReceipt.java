@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.Table;
 
 import javax.persistence.Column;
@@ -25,13 +24,22 @@ import java.io.Serializable;
 @Table(appliesTo = "esms_sales_receipt", comment = "销售凭条")
 public class SalesReceipt implements Serializable {
 
+    /**
+     * 凭条Id
+     */
     @Id
-    @Column(columnDefinition = "varchar(255) comment '凭条Id'")
+    @Column(columnDefinition = "varchar(255)")
     private String receiptId;
 
-    @Column(columnDefinition = "varchar(15) comment '日期'")
+    /**
+     * 日期
+     */
+    @Column(columnDefinition = "varchar(15)")
     private String date;
 
-    @Column(columnDefinition = "int(4) comment '销售数量'")
+    /**
+     * 销售数量
+     */
+    @Column(columnDefinition = "smallint")
     private Integer quantity;
 }

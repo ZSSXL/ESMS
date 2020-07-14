@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ImportResource;
  * @desc esms service - 启动类
  */
 @SpringBootApplication
-@ImportResource("classpath:config/spring-dubbo.xml")
+@ImportResource("classpath:config/spring-dubbo-provider.xml")
 public class EsmsServiceApplication {
 
     public static void main(String[] args) {

@@ -1,8 +1,7 @@
 spring:
-
   data:
     mongodb:
-      uri:mongodb://localhost:27017/esms
+      uri: mongodb://localhost:27017/esms
 
   jpa:
     database: postgresql
@@ -13,8 +12,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL9Dialect
 
-    datasource:
-      url: jdbc:postgresql://127.0.0.1:5432/esms
-      username: esms_admin
-      password: esms_admin
-      driver-class-name: org.postgresql.Driver
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/esms
+    username: esms_admin
+    password: esms_admin
+    driver-class-name: org.postgresql.Driver
+
+server:
+  port: 8889

@@ -25,28 +25,52 @@ import java.math.BigDecimal;
 @Table(appliesTo = "esms_payroll_record", comment = "薪酬发放记录")
 public class PayrollRecord implements Serializable {
 
+    /**
+     * 工资单Id
+     */
     @Id
-    @Column(nullable = false, columnDefinition = "varchar(255) comment '工资单Id'")
+    @Column(nullable = false, columnDefinition = "varchar(255)")
     private String payrollId;
 
-    @Column(nullable = false, columnDefinition = "varchar(255) comment '雇员Id'")
+    /**
+     * 雇员Id
+     */
+    @Column(nullable = false, columnDefinition = "varchar(255)")
     private String empId;
 
-    @Column(columnDefinition = "decimal(12, 2) comment '应发工资'")
+    /**
+     * 应发工资
+     */
+    @Column(columnDefinition = "decimal(12, 2)")
     private BigDecimal payable;
 
-    @Column(columnDefinition = "decimal(12, 2) comment '应扣工资'")
+    /**
+     * 应扣工资
+     */
+    @Column(columnDefinition = "decimal(12, 2)")
     private BigDecimal deduction;
 
-    @Column(columnDefinition = "decimal(12, 2) comment '实收工资'")
+    /**
+     * 实收工资
+     */
+    @Column(columnDefinition = "decimal(12, 2)")
     private BigDecimal actualSalary;
 
-    @Column(columnDefinition = "varchar(15) comment '发放日期'")
+    /**
+     * 发放日期
+     */
+    @Column(columnDefinition = "varchar(15)")
     private String releaseDate;
 
-    @Column(columnDefinition = "varchar(20) comment '发放人'")
+    /**
+     * 发放人
+     */
+    @Column(columnDefinition = "varchar(20)")
     private String issuer;
 
-    @Column(columnDefinition = "boolean comment '确认收款'")
+    /**
+     * 确认收款
+     */
+    @Column(columnDefinition = "boolean")
     private Boolean confirmReceipt;
 }

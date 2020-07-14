@@ -14,12 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>com.zss</groupId>
-            <artifactId>esms-base</artifactId>
+            <artifactId>esms-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.zss</groupId>
-            <artifactId>esms-api</artifactId>
+            <artifactId>esms-base</artifactId>
             <version>${project.version}</version>
         </dependency>
 

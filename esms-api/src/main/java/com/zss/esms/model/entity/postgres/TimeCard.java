@@ -25,16 +25,28 @@ import java.math.BigDecimal;
 @Table(appliesTo = "esms_time_card", comment = "时间卡")
 public class TimeCard implements Serializable {
 
+    /**
+     * 时间卡Id
+     */
     @Id
-    @Column(nullable = false, columnDefinition = "varchar(255) comment '时间卡Id'")
+    @Column(nullable = false, columnDefinition = "varchar(255)")
     private String timeCardId;
 
-    @Column(nullable = false, columnDefinition = "varchar(255) comment '员工Id'")
+    /**
+     * 员工Id
+     */
+    @Column(nullable = false, columnDefinition = "varchar(255)")
     private String empId;
 
-    @Column(nullable = false, columnDefinition = "varchar(15) comment '工作日期'")
+    /**
+     * 工作日期
+     */
+    @Column(nullable = false, columnDefinition = "varchar(15)")
     private String workingDate;
 
-    @Column(nullable = false, columnDefinition = "decimal(3,1) comment '工作时数'")
+    /**
+     * 工作时数
+     */
+    @Column(nullable = false, columnDefinition = "decimal(3,1)")
     private BigDecimal workingHours;
 }

@@ -24,13 +24,22 @@ import java.io.Serializable;
 @Table(appliesTo = "esms_employee", comment = "雇员表")
 public class Employee implements Serializable {
 
+    /**
+     * 雇员Id
+     */
     @Id
-    @Column(nullable = false, columnDefinition = "varchar(255) comment '雇员Id'")
+    @Column(nullable = false, columnDefinition = "varchar(255)")
     private String empId;
 
-    @Column(nullable = false, unique = true, columnDefinition = "varchar(20) comment '雇员姓名'")
+    /**
+     * 雇员姓名
+     */
+    @Column(nullable = false, unique = true, columnDefinition = "varchar(20)")
     private String empName;
 
-    @Column(nullable = false, columnDefinition = "varchar(255) comment '雇员密码'")
+    /**
+     * 雇员密码
+     */
+    @Column(nullable = false, columnDefinition = "varchar(255)")
     private String empPassword;
 }
