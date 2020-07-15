@@ -1,6 +1,9 @@
 package com.zss.esms.service;
 
 import com.zss.esms.model.dto.ManagerDTO;
+import com.zss.esms.model.entity.postgres.Manager;
+
+import java.util.List;
 
 /**
  * @author zhoushs@dist.com.cn
@@ -23,4 +26,19 @@ public interface ManagerService {
      * @param managerDTO 管理员DTO
      */
     void createManager(ManagerDTO managerDTO);
+
+    /**
+     * 管理员登录
+     *
+     * @param managerDTO 管理员数据传输实体
+     * @return Manager
+     */
+    Manager managerLogin(ManagerDTO managerDTO);
+
+    /**
+     * 获取所有的管理员信息
+     *
+     * @return List<ManangerDTO>
+     */
+    List<Manager> getAllManager();
 }

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 /**
@@ -18,7 +19,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ManagerDTO implements Serializable {
 
+    @NotEmpty
     private String managerName;
 
+    @NotEmpty
     private String managerPassword;
 }

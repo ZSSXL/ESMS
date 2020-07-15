@@ -8,8 +8,10 @@ import com.zss.esms.service.ManagerService;
 import com.zss.esms.util.EncryptionUtil;
 import com.zss.esms.util.IdUtil;
 import com.zss.esms.util.TimeUtil;
+import org.springframework.data.domain.Sort;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author zhoushs@dist.com.cn
@@ -37,5 +39,16 @@ public class ManagerServiceImpl implements ManagerService {
                 .managerPassword(EncryptionUtil.encrypt(managerDTO.getManagerPassword()))
                 .createTime(TimeUtil.getTimestamp())
                 .build());
+    }
+
+    @Override
+    public Manager managerLogin(ManagerDTO managerDTO) {
+        return managerRepository.findByManagerNameAndManagerPassword(managerDTO.getManagerName(),
+                EncryptionUtil.encrypt(managerDTO.getManagerPassword()));
+    }
+
+    @Override
+    public List<Manager> getAllManager() {
+        return managerRepository.findAll();
     }
 }

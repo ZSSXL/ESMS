@@ -20,4 +20,12 @@ public interface ManagerRepository extends JpaRepository<Manager, String> {
      */
     Manager findByManagerName(String managerName);
 
+    /**
+     * 通过名称和密码匹配管理员
+     *
+     * @param managerName 管理员名称
+     * @param password    密码
+     * @return Manager
+     */
+    Manager findByManagerNameAndManagerPassword(String managerName, String password);
 }
