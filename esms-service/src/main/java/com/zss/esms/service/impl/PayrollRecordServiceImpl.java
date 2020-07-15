@@ -8,6 +8,7 @@ import com.zss.esms.service.PayrollRecordService;
  * @date 2020/7/13 14:12
  * @desc 工资发放记录 - 实现服务层接口方法
  */
+@SuppressWarnings("unused")
 @Service(interfaceClass = PayrollRecordService.class)
 public class PayrollRecordServiceImpl implements PayrollRecordService {
 }

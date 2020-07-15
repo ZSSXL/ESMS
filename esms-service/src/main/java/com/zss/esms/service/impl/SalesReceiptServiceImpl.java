@@ -8,6 +8,7 @@ import com.zss.esms.service.SalesReceiptService;
  * @date 2020/7/13 14:13
  * @desc 销售凭证 - 实现服务层接口方法
  */
+@SuppressWarnings("unused")
 @Service(interfaceClass = SalesReceiptService.class)
 public class SalesReceiptServiceImpl implements SalesReceiptService {
 }

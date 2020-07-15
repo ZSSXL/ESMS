@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@SuppressWarnings("unused")
 public class InitManager implements CommandLineRunner {
 
     @Reference(interfaceClass = ManagerService.class)
@@ -35,12 +36,10 @@ public class InitManager implements CommandLineRunner {
             log.info("The initial Manger already exists");
         } else {
             try {
-                ManagerDTO build = ManagerDTO.builder()
+                managerService.createManager(ManagerDTO.builder()
                         .managerName(MANAGER_NAME)
                         .managerPassword(MANAGER_PASSWORD)
-                        .build();
-                System.out.println("Build : " + build);
-                managerService.createManager(build);
+                        .build());
                 log.info("Initial Manager success ...");
             } catch (Exception e) {
                 log.error("init admin error [{}]", e.getMessage());

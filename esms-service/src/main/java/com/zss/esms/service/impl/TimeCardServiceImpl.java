@@ -8,6 +8,7 @@ import com.zss.esms.service.TimeCardService;
  * @date 2020/7/13 14:14
  * @desc 时间卡 - 实现服务层接口方法
  */
+@SuppressWarnings("unused")
 @Service(interfaceClass = TimeCardService.class)
 public class TimeCardServiceImpl implements TimeCardService {
 }

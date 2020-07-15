@@ -8,6 +8,7 @@ import com.zss.esms.service.EmployeeService;
  * @date 2020/7/13 14:10
  * @desc 雇员 - 实现服务层接口方法
  */
+@SuppressWarnings("unused")
 @Service(interfaceClass = EmployeeService.class)
 public class EmployeeServiceImpl implements EmployeeService {
 }

@@ -8,6 +8,7 @@ import com.zss.esms.service.PaymentMethodService;
  * @date 2020/7/13 14:11
  * @desc 支付方法 - 实现服务层接口方法
  */
+@SuppressWarnings("unused")
 @Service(interfaceClass = PaymentMethodService.class)
 public class PaymentMethodServiceImpl implements PaymentMethodService {
 }

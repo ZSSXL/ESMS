@@ -26,13 +26,11 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Boolean isExistInDb(String managerName) {
         Manager manager = managerRepository.findByManagerName(managerName);
-        System.out.println(managerName + " : Exist : [" + manager + "]");
         return manager != null;
     }
 
     @Override
     public void createManager(ManagerDTO managerDTO) {
-        System.out.println("ManagerDTO : [" + managerDTO + "]");
         managerRepository.save(Manager.builder()
                 .managerId(IdUtil.getId())
                 .managerName(managerDTO.getManagerName())
