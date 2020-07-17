@@ -1,7 +1,6 @@
 package com.zss.esms.service;
 
-
-import org.springframework.web.multipart.MultipartFile;
+import com.zss.esms.page.Pagenation;
 
 /**
  * @author zhoushs@dist.com.cn
@@ -9,14 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
  * @desc 雇员 - 服务层接口
  */
 public interface EmployeeService {
-
-    /**
-     * 服务测试
-     *
-     * @param content 内容
-     * @return String
-     */
-    String serviceTest(String content);
 
     /**
      * 解析Excel文件，批量添加员工
@@ -27,4 +18,13 @@ public interface EmployeeService {
      * @return Interger 最终添加成功数量
      */
     Integer createManayEmp(byte[] fileBytes, String originalFilename, Integer cells);
+
+    /**
+     * 获取所有的员工信息
+     *
+     * @param page 当前页
+     * @param size 每页大小
+     * @return Page<Profile>
+     */
+    Pagenation showAllEmployees(Integer page, Integer size);
 }

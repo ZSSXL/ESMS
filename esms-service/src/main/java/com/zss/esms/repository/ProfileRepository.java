@@ -1,7 +1,6 @@
 package com.zss.esms.repository;
 
 import com.zss.esms.model.entity.mongdb.Profile;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

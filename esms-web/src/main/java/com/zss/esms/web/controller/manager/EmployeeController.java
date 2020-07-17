@@ -1,13 +1,13 @@
 package com.zss.esms.web.controller.manager;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.zss.esms.comment.Constant;
 import com.zss.esms.response.ServerResponse;
 import com.zss.esms.service.EmployeeService;
+import com.zss.esms.page.Pagenation;
 import com.zss.esms.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -50,6 +50,22 @@ public class EmployeeController extends BaseController {
             } else {
                 return ServerResponse.createBySuccess("成功添加员工[ " + successCount + " ]人...");
             }
+        }
+    }
+
+    /**
+     * 获取所有员工信息
+     *
+     * @return String
+     */
+    @GetMapping
+    public ServerResponse<Pagenation> getAllEmployee(@RequestParam(value = "page", defaultValue = Constant.DEFAULT_PAGE_NUMBER) Integer page,
+                                                     @RequestParam(value = "size", defaultValue = Constant.DEFAULT_PAGE_SIZE) Integer size) {
+        Pagenation profiles = employeeService.showAllEmployees(page, size);
+        if (profiles == null) {
+            return ServerResponse.createByErrorMessage("查询失败,请刷新重试...");
+        } else {
+            return ServerResponse.createBySuccess(profiles);
         }
     }
 }

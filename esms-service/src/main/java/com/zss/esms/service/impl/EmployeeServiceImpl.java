@@ -6,6 +6,7 @@ import com.zss.esms.model.dto.ProfileDTO;
 import com.zss.esms.model.entity.mongdb.PaymentMethod;
 import com.zss.esms.model.entity.mongdb.Profile;
 import com.zss.esms.model.entity.postgres.Employee;
+import com.zss.esms.page.Pagenation;
 import com.zss.esms.repository.EmployeeRepository;
 import com.zss.esms.repository.PaymentMethodRepository;
 import com.zss.esms.repository.ProfileRepository;
@@ -13,6 +14,8 @@ import com.zss.esms.service.EmployeeService;
 import com.zss.esms.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -39,12 +42,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Resource
     private PaymentMethodRepository paymentMethodRepository;
 
-    @Override
-    public String serviceTest(String content) {
-        System.out.println("Service Test : " + content);
-        return "Yes";
-    }
-
     /**
      * 对三个表进行操作，psql(Employee), mongodb(Profile, PaymentMethod)
      * 1. 生成Employee存入
@@ -54,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param fileBytes        文件字节流
      * @param originalFilename 文件名
      * @param cells            需要的列数
-     * @return Integer
+     * @return Integer 成功添加的数量
      */
     @Override
     public Integer createManayEmp(byte[] fileBytes, String originalFilename, Integer cells) {
@@ -135,6 +132,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return succuseCount;
     }
+
+    @Override
+    public Pagenation showAllEmployees(Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "entryTime"));
+        return PageUtil.converter(profileRepository.findAll(pageRequest));
+    }
+
+    // =============================== 内部私有方法 =============================== //
 
     /**
      * 整理内容

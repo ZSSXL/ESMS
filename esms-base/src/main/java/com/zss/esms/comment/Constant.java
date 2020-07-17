@@ -9,6 +9,16 @@ package com.zss.esms.comment;
 public class Constant {
 
     /**
+     * 默认当前页
+     */
+    public static final String DEFAULT_PAGE_NUMBER = "0";
+
+    /**
+     * 默认分页条数
+     */
+    public static final String DEFAULT_PAGE_SIZE = "24";
+
+    /**
      * 角色
      */
     public interface Role {
