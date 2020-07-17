@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author zhoushs@dist.com.cn
@@ -33,5 +34,5 @@ public class PaymentMethod implements Serializable {
     /**
      * 支付选择
      */
-    private Object choice;
+    private Map<String, String> choice;
 }

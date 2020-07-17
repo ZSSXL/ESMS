@@ -1,4 +1,4 @@
-package com.zss.esms.web.util;
+package com.zss.esms.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -7,12 +7,15 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhoushs@dist.com.cn
@@ -31,20 +34,21 @@ public class ExcelUtil {
     /**
      * 解析Excel文件中的数据
      *
-     * @param file  multipartfile
-     * @param cells 需要获取的列数
+     * @param fileBytes        文件字节流
+     * @param originalFilename 文件名
+     * @param cells            需要获取的列数
      * @return List<List < String>>
      */
-    public static List<List<String>> analysisExcel(MultipartFile file, Integer cells) {
-        List<List<String>> result = new ArrayList<>();
+    public static List<Map<String, String>> analysisExcel(byte[] fileBytes, String originalFilename, Integer cells) {
+        List<Map<String, String>> result = new ArrayList<>();
         // 获取文件名
-        String originalFilename = file.getOriginalFilename();
+        // String originalFilename = file.getOriginalFilename();
         if (StringUtils.isEmpty(originalFilename)) {
             return null;
         } else {
             try {
                 // 获取输入流
-                InputStream inputStream = file.getInputStream();
+                InputStream inputStream = new ByteArrayInputStream(fileBytes);
                 // 判断Excel版本
                 Workbook workbook;
                 if (judgeExcelEdition(originalFilename)) {
@@ -53,27 +57,19 @@ public class ExcelUtil {
                     workbook = new HSSFWorkbook(inputStream);
                 }
 
-                DecimalFormat format = new DecimalFormat("0");
                 // 获取第一张工作表
                 Sheet sheet = workbook.getSheetAt(0);
+                // 获取第2行
+                Row tableHeader = sheet.getRow(1);
                 // 遍历表格 - 行
                 for (Row row : sheet) {
-                    List<String> cellList = new ArrayList<>();
                     int rowNum = row.getRowNum();
-                    // 跳过第一行
-                    if (rowNum == 0) {
+                    // 跳过第1行和第2行
+                    if (rowNum == 0 || rowNum == 1) {
                         continue;
                     }
-                    // 遍历表格 - 列
-                    for (int i = 0; i < cells; i++) {
-                        Cell cell = row.getCell(i);
-                        if (cell.getCellType() == CellType.STRING) {
-                            cellList.add(cell.getStringCellValue());
-                        } else if (cell.getCellType() == CellType.NUMERIC) {
-                            cellList.add(format.format(cell.getNumericCellValue()));
-                        }
-                    }
-                    result.add(cellList);
+                    Map<String, String> cellMap = filterProfileData(row, tableHeader, cells);
+                    result.add(cellMap);
                 }
                 workbook.close();
             } catch (FileNotFoundException e) {
@@ -93,5 +89,40 @@ public class ExcelUtil {
      */
     private static boolean judgeExcelEdition(String fileName) {
         return fileName.matches(MATCH);
+    }
+
+    /**
+     * 筛选个人资料数据
+     *
+     * @param cells       需要的列数
+     * @param tableHeader 表头
+     * @param row         每一行
+     * @return Map<String, String>
+     */
+    private static Map<String, String> filterProfileData(Row row, Row tableHeader, Integer cells) {
+        Map<String, String> map = new HashMap<>(cells);
+        DecimalFormat format = new DecimalFormat("0");
+        for (int i = 0; i < cells; i++) {
+            Cell cell = row.getCell(i);
+            if (cell == null) {
+                continue;
+            }
+            // 表头名称
+            String headerName = tableHeader.getCell(i).getStringCellValue();
+            // 列内容
+            String cellValue = null;
+            if (cell.getCellType() == CellType.STRING) {
+                // 如果是字符类型
+                cellValue = cell.getStringCellValue();
+            } else if (cell.getCellType() == CellType.NUMERIC) {
+                // 如果是整数类型
+                cellValue = format.format(cell.getNumericCellValue());
+            } else if (cell.getCellType() == CellType.BLANK) {
+                // 如果为空表格，则跳过
+                continue;
+            }
+            map.put(headerName, cellValue);
+        }
+        return map;
     }
 }

@@ -11,4 +11,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
+
+    /**
+     * 通过员工名称获取员工
+     *
+     * @param empName 员工名称
+     * @return Employee
+     */
+    Employee findByEmpName(String empName);
 }

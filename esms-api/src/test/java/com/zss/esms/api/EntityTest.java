@@ -1,9 +1,7 @@
 package com.zss.esms.api;
 
-import com.zss.esms.util.MapUtil;
-import com.zss.esms.model.entity.mongdb.Bank;
-import com.zss.esms.model.entity.mongdb.PaymentMethod;
 import com.zss.esms.model.entity.mongdb.Profile;
+import com.zss.esms.util.MapUtil;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -18,7 +16,7 @@ public class EntityTest extends BaseTest {
     @Test
     public void paymentMethodTest() {
 
-        PaymentMethod pm = PaymentMethod.builder()
+        /*PaymentMethod pm = PaymentMethod.builder()
                 .empId("1001")
                 .methodId("2001")
                 .choice(Bank.builder()
@@ -26,7 +24,7 @@ public class EntityTest extends BaseTest {
                         .cardOwner("张三")
                         .build())
                 .build();
-        System.out.println("Payment Method : [" + pm + "]");
+        System.out.println("Payment Method : [" + pm + "]");*/
     }
 
     @Test
