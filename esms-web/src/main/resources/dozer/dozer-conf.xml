@@ -6,6 +6,6 @@
     <mapping>
         <!--对应的实体和要转换成的VO-->
         <class-a>com.zss.esms.model.entity.postgres.Manager</class-a>
-        <class-b>com.zss.esms.model.dto.ManagerDTO</class-b>
+        <class-b>com.zss.esms.model.dto.LoginDTO</class-b>
     </mapping>
 </mappings>

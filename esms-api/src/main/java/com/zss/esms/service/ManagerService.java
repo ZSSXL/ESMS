@@ -1,6 +1,6 @@
 package com.zss.esms.service;
 
-import com.zss.esms.model.dto.ManagerDTO;
+import com.zss.esms.model.dto.LoginDTO;
 import com.zss.esms.model.entity.postgres.Manager;
 
 import java.util.List;
@@ -25,15 +25,15 @@ public interface ManagerService {
      *
      * @param managerDTO 管理员DTO
      */
-    void createManager(ManagerDTO managerDTO);
+    void createManager(LoginDTO managerDTO);
 
     /**
      * 管理员登录
      *
-     * @param managerDTO 管理员数据传输实体
+     * @param loginDTO 管理员数据传输实体
      * @return Manager
      */
-    Manager managerLogin(ManagerDTO managerDTO);
+    Manager managerLogin(LoginDTO loginDTO);
 
     /**
      * 获取所有的管理员信息

@@ -1,14 +1,13 @@
 package com.zss.esms.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.zss.esms.model.dto.ManagerDTO;
+import com.zss.esms.model.dto.LoginDTO;
 import com.zss.esms.model.entity.postgres.Manager;
 import com.zss.esms.repository.ManagerRepository;
 import com.zss.esms.service.ManagerService;
 import com.zss.esms.util.EncryptionUtil;
 import com.zss.esms.util.IdUtil;
 import com.zss.esms.util.TimeUtil;
-import org.springframework.data.domain.Sort;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,19 +31,19 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public void createManager(ManagerDTO managerDTO) {
+    public void createManager(LoginDTO loginDTO) {
         managerRepository.save(Manager.builder()
                 .managerId(IdUtil.getId())
-                .managerName(managerDTO.getManagerName())
-                .managerPassword(EncryptionUtil.encrypt(managerDTO.getManagerPassword()))
+                .managerName(loginDTO.getUsername())
+                .managerPassword(EncryptionUtil.encrypt(loginDTO.getPassword()))
                 .createTime(TimeUtil.getTimestamp())
                 .build());
     }
 
     @Override
-    public Manager managerLogin(ManagerDTO managerDTO) {
-        return managerRepository.findByManagerNameAndManagerPassword(managerDTO.getManagerName(),
-                EncryptionUtil.encrypt(managerDTO.getManagerPassword()));
+    public Manager managerLogin(LoginDTO loginDTO) {
+        return managerRepository.findByManagerNameAndManagerPassword(loginDTO.getUsername(),
+                EncryptionUtil.encrypt(loginDTO.getPassword()));
     }
 
     @Override

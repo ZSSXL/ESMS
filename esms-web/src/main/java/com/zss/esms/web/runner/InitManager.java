@@ -1,7 +1,7 @@
 package com.zss.esms.web.runner;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.zss.esms.model.dto.ManagerDTO;
+import com.zss.esms.model.dto.LoginDTO;
 import com.zss.esms.service.ManagerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -36,9 +36,9 @@ public class InitManager implements CommandLineRunner {
             log.info("The initial Manger already exists");
         } else {
             try {
-                managerService.createManager(ManagerDTO.builder()
-                        .managerName(MANAGER_NAME)
-                        .managerPassword(MANAGER_PASSWORD)
+                managerService.createManager(LoginDTO.builder()
+                        .username(MANAGER_NAME)
+                        .password(MANAGER_PASSWORD)
                         .build());
                 log.info("Initial Manager success ...");
             } catch (Exception e) {
