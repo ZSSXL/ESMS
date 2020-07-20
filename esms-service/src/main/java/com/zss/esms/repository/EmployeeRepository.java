@@ -19,4 +19,13 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
      * @return Employee
      */
     Employee findByEmpName(String empName);
+
+    /**
+     * 通过用户名和密码查找对象
+     *
+     * @param empName     员工名称
+     * @param empPassword 员工密码
+     * @return Employee
+     */
+    Employee findByEmpNameAndEmpPassword(String empName, String empPassword);
 }

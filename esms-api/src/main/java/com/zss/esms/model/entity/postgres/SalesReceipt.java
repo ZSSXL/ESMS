@@ -32,6 +32,12 @@ public class SalesReceipt implements Serializable {
     private String receiptId;
 
     /**
+     * 员工Id
+     */
+    @Column(columnDefinition = "varchar(255)")
+    private String empId;
+
+    /**
      * 日期
      */
     @Column(columnDefinition = "varchar(15)")

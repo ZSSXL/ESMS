@@ -1,5 +1,7 @@
 package com.zss.esms.service;
 
+import com.zss.esms.model.dto.LoginDTO;
+import com.zss.esms.model.entity.postgres.Employee;
 import com.zss.esms.page.Pagenation;
 
 /**
@@ -27,4 +29,12 @@ public interface EmployeeService {
      * @return Page<Profile>
      */
     Pagenation showAllEmployees(Integer page, Integer size);
+
+    /**
+     * 员工登录
+     *
+     * @param loginDTO 登录信息传输对象
+     * @return Employee
+     */
+    Employee employeeLogin(LoginDTO loginDTO);
 }

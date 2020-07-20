@@ -2,6 +2,7 @@ package com.zss.esms.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.zss.esms.comment.Constant;
+import com.zss.esms.model.dto.LoginDTO;
 import com.zss.esms.model.dto.ProfileDTO;
 import com.zss.esms.model.entity.mongdb.PaymentMethod;
 import com.zss.esms.model.entity.mongdb.Profile;
@@ -137,6 +138,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Pagenation showAllEmployees(Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "entryTime"));
         return PageUtil.converter(profileRepository.findAll(pageRequest));
+    }
+
+    @Override
+    public Employee employeeLogin(LoginDTO loginDTO) {
+        return employeeRepository.findByEmpNameAndEmpPassword(loginDTO.getUsername(),
+                EncryptionUtil.encrypt(loginDTO.getPassword()));
     }
 
     // =============================== 内部私有方法 =============================== //
