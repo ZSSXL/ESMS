@@ -21,6 +21,11 @@ import java.io.Serializable;
 public class SalesReceiptDTO implements Serializable {
 
     /**
+     * 凭条Id
+     */
+    private String receiptId;
+
+    /**
      * 日期 - 不上传日期，默认当天
      */
     private String date;

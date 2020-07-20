@@ -3,9 +3,15 @@ package com.zss.esms.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.zss.esms.model.dto.SalesReceiptDTO;
 import com.zss.esms.model.entity.postgres.SalesReceipt;
+import com.zss.esms.page.Pagenation;
 import com.zss.esms.repository.SalesReceiptRepository;
 import com.zss.esms.service.SalesReceiptService;
 import com.zss.esms.util.IdUtil;
+import com.zss.esms.util.PageUtil;
+import com.zss.esms.util.TimeUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.annotation.Resource;
 
@@ -29,7 +35,21 @@ public class SalesReceiptServiceImpl implements SalesReceiptService {
                 .date(salesReceiptDTO.getDate())
                 .quantity(salesReceiptDTO.getQuantity())
                 .build();
-        System.out.println("SaleReceipt : " + salesReceipt);
         salesReceiptRepository.save(salesReceipt);
+    }
+
+    @Override
+    public Pagenation showSaleReceiptByPage(String empId, Integer page, Integer size) {
+        Pageable pageRequest = PageRequest.of(page, size);
+        Page<SalesReceipt> salesReceiptPage = salesReceiptRepository.findAllByEmpIdOrderByDateDesc(empId, pageRequest);
+        return PageUtil.converter(salesReceiptPage);
+    }
+
+    @Override
+    public Boolean checkDate(String empId, String timestamp) {
+        String start = TimeUtil.getStart(timestamp);
+        String end = TimeUtil.getEnd(timestamp);
+        SalesReceipt checkResult = salesReceiptRepository.findByEmpIdAndDateBetween(empId, start, end);
+        return checkResult != null;
     }
 }

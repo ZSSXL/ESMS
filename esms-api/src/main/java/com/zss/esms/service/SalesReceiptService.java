@@ -1,6 +1,7 @@
 package com.zss.esms.service;
 
 import com.zss.esms.model.dto.SalesReceiptDTO;
+import com.zss.esms.page.Pagenation;
 
 /**
  * @author zhoushs@dist.com.cn
@@ -16,4 +17,23 @@ public interface SalesReceiptService {
      * @param empId           员工ID
      */
     void insertSaleReceipt(SalesReceiptDTO salesReceiptDTO, String empId);
+
+    /**
+     * 分页获取所有的数据
+     *
+     * @param empId 员工Id
+     * @param page  当前页
+     * @param size  每页显示条数
+     * @return Pagenation
+     */
+    Pagenation showSaleReceiptByPage(String empId, Integer page, Integer size);
+
+    /**
+     * 检查是否已经提交
+     *
+     * @param empId     员工Id
+     * @param timestamp 时间戳
+     * @return Boolean
+     */
+    Boolean checkDate(String empId, String timestamp);
 }

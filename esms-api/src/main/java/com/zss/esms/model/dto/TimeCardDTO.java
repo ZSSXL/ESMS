@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,6 +19,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TimeCardDTO implements Serializable {
+
+    /**
+     * 时间卡Id
+     */
+    private String timeCardId;
 
     /**
      * 工作日期 - 不上传日期，默认当天

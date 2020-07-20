@@ -1,7 +1,9 @@
 package com.zss.esms.web.controller.emp;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.zss.esms.comment.Constant;
 import com.zss.esms.model.dto.SalesReceiptDTO;
+import com.zss.esms.page.Pagenation;
 import com.zss.esms.response.ResponseCode;
 import com.zss.esms.response.ServerResponse;
 import com.zss.esms.service.SalesReceiptService;
@@ -45,13 +47,42 @@ public class SalesReceiptController extends BaseController {
                 salesReceiptDTO.setDate(TimeUtil.getTimestamp());
             }
             String empId = TokenUtil.getClaim(token, "userId").asString();
-            try {
-                receiptService.insertSaleReceipt(salesReceiptDTO, empId);
-                return ServerResponse.createBySuccessMessage("上传销售凭条成功...");
-            } catch (Exception e) {
-                log.error("保存销售凭条发生以下异常情况，请查看日志... [{}]", e.getMessage());
-                return ServerResponse.createByErrorMessage("上传销售凭条失败，请刷新重试...");
+
+            // 检查当天是否以提交
+            Boolean check = receiptService.checkDate(empId, salesReceiptDTO.getDate());
+            if (check) {
+                return ServerResponse.createByErrorMessage("已提交当天的销售清单...");
+            } else {
+                try {
+                    receiptService.insertSaleReceipt(salesReceiptDTO, empId);
+                    return ServerResponse.createBySuccessMessage("上传销售凭条成功...");
+                } catch (Exception e) {
+                    log.error("保存销售凭条发生以下异常情况，请查看日志... [{}]", e.getMessage());
+                    return ServerResponse.createByErrorMessage("上传销售凭条失败，请刷新重试...");
+                }
             }
         }
     }
+
+    /**
+     * 获取个人销售凭条
+     *
+     * @param token 身份令牌
+     * @param page  当前页
+     * @param size  每页大小
+     * @return Pagenation
+     */
+    @GetMapping
+    public ServerResponse<Pagenation> getSalesReceiptByPage(@RequestHeader String token,
+                                                            @RequestParam(value = "page", defaultValue = Constant.DEFAULT_PAGE_NUMBER) Integer page,
+                                                            @RequestParam(value = "size", defaultValue = Constant.DEFAULT_PAGE_SIZE) Integer size) {
+        String empId = TokenUtil.getClaim(token, "userId").asString();
+        Pagenation pagenation = receiptService.showSaleReceiptByPage(empId, page, size);
+        if (pagenation == null) {
+            return ServerResponse.createByErrorMessage("获取信息失败，请刷新重试...");
+        } else {
+            return ServerResponse.createBySuccess(pagenation);
+        }
+    }
+
 }
