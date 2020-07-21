@@ -8,6 +8,7 @@ import com.zss.esms.response.ServerResponse;
 import com.zss.esms.service.ManagerService;
 import com.zss.esms.util.MapUtil;
 import com.zss.esms.util.TokenUtil;
+import com.zss.esms.web.controller.BaseController;
 import com.zss.esms.web.util.GeneralConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/manager")
 @SuppressWarnings("unused")
-public class ManagerController {
+public class ManagerController extends BaseController {
 
     @Reference
     private ManagerService managerService;

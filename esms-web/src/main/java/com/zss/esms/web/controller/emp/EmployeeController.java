@@ -8,6 +8,7 @@ import com.zss.esms.response.ServerResponse;
 import com.zss.esms.service.EmployeeService;
 import com.zss.esms.util.MapUtil;
 import com.zss.esms.util.TokenUtil;
+import com.zss.esms.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ import javax.validation.Valid;
 @RestController("empContro")
 @RequestMapping("/emp")
 @SuppressWarnings("unused")
-public class EmployeeController {
+public class EmployeeController extends BaseController {
 
     @Reference
     private EmployeeService employeeService;
