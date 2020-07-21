@@ -36,4 +36,12 @@ public interface SalesReceiptService {
      * @return Boolean
      */
     Boolean checkDate(String empId, String timestamp);
+
+    /**
+     * 统计上一周的销售数量
+     *
+     * @param empId 员工Id
+     * @return Integer
+     */
+    Integer countSalesQuantity(String empId);
 }

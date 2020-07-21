@@ -1,7 +1,11 @@
 package com.zss.esms.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.zss.esms.model.entity.postgres.PayrollRecord;
+import com.zss.esms.repository.PayrollRecordRepository;
 import com.zss.esms.service.PayrollRecordService;
+
+import javax.annotation.Resource;
 
 /**
  * @author zhoushs@dist.com.cn
@@ -11,4 +15,12 @@ import com.zss.esms.service.PayrollRecordService;
 @SuppressWarnings("unused")
 @Service(interfaceClass = PayrollRecordService.class)
 public class PayrollRecordServiceImpl implements PayrollRecordService {
+
+    @Resource
+    private PayrollRecordRepository payrollRecordRepository;
+
+    @Override
+    public PayrollRecord savePayrollRecord(PayrollRecord payrollRecord) {
+        return payrollRecordRepository.save(payrollRecord);
+    }
 }

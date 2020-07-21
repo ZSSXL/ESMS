@@ -9,6 +9,11 @@ package com.zss.esms.comment;
 public class Constant {
 
     /**
+     * esms
+     */
+    public static final String ESMS = "ESMS";
+
+    /**
      * 默认当前页
      */
     public static final String DEFAULT_PAGE_NUMBER = "0";

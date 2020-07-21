@@ -3,6 +3,8 @@ package com.zss.esms.service;
 import com.zss.esms.model.dto.TimeCardDTO;
 import com.zss.esms.page.Pagenation;
 
+import java.math.BigDecimal;
+
 /**
  * @author zhoushs@dist.com.cn
  * @date 2020/7/13 13:30
@@ -36,4 +38,12 @@ public interface TimeCardService {
      * @return Boolean
      */
     Boolean checkDate(String empId, String workingDate);
+
+    /**
+     * 统计一周工作时数
+     *
+     * @param empId 员工Id
+     * @return BigDecimal
+     */
+    BigDecimal countWorkingHours(String empId);
 }

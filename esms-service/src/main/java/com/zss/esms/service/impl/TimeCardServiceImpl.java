@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 
 /**
  * @author zhoushs@dist.com.cn
@@ -51,5 +52,15 @@ public class TimeCardServiceImpl implements TimeCardService {
         String end = TimeUtil.getEnd(workingDate);
         TimeCard checkResult = timeCardRepository.findByEmpIdAndWorkingDateBetween(empId, start, end);
         return checkResult != null;
+    }
+
+    @Override
+    public BigDecimal countWorkingHours(String empId) {
+        // 获取本周起始和结束的时间戳
+        String beginDayOfWeek = TimeUtil.getBeginDayOfWeek();
+        String endDayOfWeek = TimeUtil.getEndDayOfWeek();
+        BigDecimal count = timeCardRepository
+                .findAllByEmpIdAndWorkingDateBetween(empId, beginDayOfWeek, endDayOfWeek);
+        return count == null ? new BigDecimal("0") : count;
     }
 }

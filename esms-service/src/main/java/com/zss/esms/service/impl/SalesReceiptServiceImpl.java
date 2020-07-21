@@ -32,7 +32,7 @@ public class SalesReceiptServiceImpl implements SalesReceiptService {
         SalesReceipt salesReceipt = SalesReceipt.builder()
                 .receiptId(IdUtil.getId())
                 .empId(empId)
-                .date(salesReceiptDTO.getDate())
+                .receiptDate(salesReceiptDTO.getDate())
                 .quantity(salesReceiptDTO.getQuantity())
                 .build();
         salesReceiptRepository.save(salesReceipt);
@@ -41,7 +41,8 @@ public class SalesReceiptServiceImpl implements SalesReceiptService {
     @Override
     public Pagenation showSaleReceiptByPage(String empId, Integer page, Integer size) {
         Pageable pageRequest = PageRequest.of(page, size);
-        Page<SalesReceipt> salesReceiptPage = salesReceiptRepository.findAllByEmpIdOrderByDateDesc(empId, pageRequest);
+        Page<SalesReceipt> salesReceiptPage = salesReceiptRepository
+                .findAllByEmpIdOrderByReceiptDateDesc(empId, pageRequest);
         return PageUtil.converter(salesReceiptPage);
     }
 
@@ -49,7 +50,17 @@ public class SalesReceiptServiceImpl implements SalesReceiptService {
     public Boolean checkDate(String empId, String timestamp) {
         String start = TimeUtil.getStart(timestamp);
         String end = TimeUtil.getEnd(timestamp);
-        SalesReceipt checkResult = salesReceiptRepository.findByEmpIdAndDateBetween(empId, start, end);
+        SalesReceipt checkResult = salesReceiptRepository.findByEmpIdAndReceiptDateBetween(empId, start, end);
         return checkResult != null;
+    }
+
+    @Override
+    public Integer countSalesQuantity(String empId) {
+        // 获取上一周周一到上一周周日的时间戳
+        String beginDayOfLastWeek = TimeUtil.getBeginDayOfLastWeek();
+        String endDayOfLastWeek = TimeUtil.getEndDayOfLastWeek();
+        Integer count = salesReceiptRepository
+                .findAllByEmpIdAndReceiptDateBetween(empId, beginDayOfLastWeek, endDayOfLastWeek);
+        return count == null ? 0 : count;
     }
 }

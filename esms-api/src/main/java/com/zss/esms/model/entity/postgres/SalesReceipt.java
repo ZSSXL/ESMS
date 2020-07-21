@@ -41,7 +41,7 @@ public class SalesReceipt implements Serializable {
      * 日期
      */
     @Column(columnDefinition = "varchar(15)")
-    private String date;
+    private String receiptDate;
 
     /**
      * 销售数量
