@@ -10,7 +10,6 @@ import com.zss.esms.service.TimeCardService;
 import com.zss.esms.util.IdUtil;
 import com.zss.esms.util.TimeUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.math3.exception.MathArithmeticException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -61,7 +60,7 @@ public class PaymentTask {
                 // 钟点工
                 case Constant.EmployeeType.HOURLY:
                     // 判断今天是不是周五
-                    if (!TimeUtil.dayOfWeek(Calendar.FRIDAY)) {
+                    if (TimeUtil.dayOfWeek(Calendar.FRIDAY)) {
                         String hourlySalary = profile.getSalary().get("hourlySalary");
                         payable = calcuHourly(profile.getEmpId(), hourlySalary);
                     }
@@ -77,7 +76,7 @@ public class PaymentTask {
                 // 受薪工
                 case Constant.EmployeeType.SALARIED:
                     // 判断今天是不是月底
-                    if (!TimeUtil.isLastDayOfMonth()) {
+                    if (TimeUtil.isLastDayOfMonth()) {
                         String commission = profile.getSalary().get("commission");
                         payable = calcuSaleried(profile.getEmpId(), commission);
                     }
@@ -136,7 +135,7 @@ public class PaymentTask {
             BigDecimal multiply = quantityCount.multiply(commission);
             System.out.println("Saleried Multiply : " + multiply);
             return multiply;
-        } catch (MathArithmeticException e) {
+        } catch (Exception e) {
             log.error("[ " + empId + " ]计算工资失败... [{}]", e.getMessage());
             return new BigDecimal("0");
         }

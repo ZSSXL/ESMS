@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -42,7 +41,6 @@ public class ExcelUtil {
     public static List<Map<String, String>> analysisExcel(byte[] fileBytes, String originalFilename, Integer cells) {
         List<Map<String, String>> result = new ArrayList<>();
         // 获取文件名
-        // String originalFilename = file.getOriginalFilename();
         if (StringUtils.isEmpty(originalFilename)) {
             return null;
         } else {

@@ -1,0 +1,18 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="esms-provider"/>
+    <!-- 注册中心的IP地址 -->
+    <dubbo:registry address="zookeeper://60.205.179.156:2181" file="N/A"/>
+    <!-- 扫描注解包路径 -->
+    <dubbo:annotation package="com.zss.esms.service"/>
+    <!-- dubbo协议缺省端口20880，多个提供者会冲突 -->
+    <dubbo:protocol name="dubbo" port="20888"/>
+
+    <dubbo:provider version="1.0.1" timeout="300000"/>
+</beans>
