@@ -3,19 +3,22 @@ package com.zss.esms.web.runner;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.zss.esms.model.dto.LoginDTO;
 import com.zss.esms.service.ManagerService;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
 
 /**
  * @author zhoushs@dist.com.cn
  * @date 2020/7/13 16:39
  * @desc 创建初始化
  */
-@Slf4j
 @Component
 @SuppressWarnings("unused")
 public class InitManager implements CommandLineRunner {
+
+    private final static Logger log = LoggerFactory.getLogger(InitManager.class);
 
     @Reference(interfaceClass = ManagerService.class)
     private ManagerService managerService;
