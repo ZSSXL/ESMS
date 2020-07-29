@@ -2,7 +2,6 @@ package com.zss.esms.web.config;
 
 import com.zss.esms.web.config.interceptor.EmployeeInterceptor;
 import com.zss.esms.web.config.interceptor.ManagerInterceptor;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -38,4 +37,15 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/emp/**")
                 .excludePathPatterns("/emp/login");
     }
+
+    /*@Override
+    // 在此拦截器中配置允许跨域，由于拦截器和跨域的顺序问题，还是会出现跨域的问题
+    // 解决方法：将cors放在filter中
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowCredentials(true)
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .maxAge(3600);
+    }*/
 }
