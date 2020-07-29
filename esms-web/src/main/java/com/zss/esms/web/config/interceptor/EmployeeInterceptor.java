@@ -2,6 +2,7 @@ package com.zss.esms.web.config.interceptor;
 
 import com.zss.esms.comment.Constant;
 import com.zss.esms.exception.BizException;
+import com.zss.esms.exception.PermissionException;
 import com.zss.esms.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +30,11 @@ public class EmployeeInterceptor implements HandlerInterceptor {
         } else {
             if (TokenUtil.isValid(token)) {
                 String role = TokenUtil.getClaim(token, "role").asString();
-                return StringUtils.equals(role, Constant.Role.EMPLOYEE);
+                if (StringUtils.equals(role, Constant.Role.MANAGER)) {
+                    return true;
+                } else {
+                    throw new PermissionException("无访问权限, 请重新尝试!!!");
+                }
             } else {
                 log.warn("身份校验信息已经过期！！！");
                 throw new BizException("身份校验信息已经过期！！！");
