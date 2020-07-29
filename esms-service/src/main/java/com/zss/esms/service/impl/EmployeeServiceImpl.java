@@ -63,63 +63,64 @@ public class EmployeeServiceImpl implements EmployeeService {
         Integer succuseCount = 0;
         for (Map<String, String> tempMap : cellList) {
             ProfileDTO profileDTO = organizeContent(tempMap);
-            String empId = IdUtil.getId();
-            // 构建Employee
-            Employee employee = Employee.builder()
-                    .empId(empId)
-                    .empName(profileDTO.getEmpName())
-                    .empPassword(EncryptionUtil.encrypt("123456"))
-                    .build();
-            // 构建PaymentMethod
-            PaymentMethod paymentMethod = PaymentMethod.builder()
-                    .methodId(IdUtil.getId())
-                    .empId(empId)
-                    .build();
-            if (StringUtils.equals(profileDTO.getPaymentMethod(), Constant.PaymentMethod.CHECK_PAYMENT)) {
-                Map<String, String> checkMap = new HashMap<>(4);
-                checkMap.put("recipient", profileDTO.getRecipient());
-                checkMap.put("recipientAddress", profileDTO.getRecipientAddress());
-                checkMap.put("recipientPhone", profileDTO.getRecipientPhone());
-                checkMap.put("remark", profileDTO.getRemark());
-                paymentMethod.setChoice(checkMap);
-            }
-            if (StringUtils.equals(profileDTO.getPaymentMethod(), Constant.PaymentMethod.BANK_TRANSFER)) {
-                Map<String, String> bankMap = new HashMap<>(2);
-                bankMap.put("cardNumber", profileDTO.getBankCardNumber());
-                bankMap.put("cardOwner", profileDTO.getBankCardOwner());
-                paymentMethod.setChoice(bankMap);
-            }
-            // 构建Profile
-            Profile profile = Profile.builder()
-                    .profileId(IdUtil.getId())
-                    .empId(empId)
-                    .empName(profileDTO.getEmpName())
-                    .empEmail(profileDTO.getEmpEmail())
-                    .empType(profileDTO.getEmpType())
-                    .entryTime(TimeUtil.getTimestamp())
-                    .build();
-            if (StringUtils.equals(profileDTO.getSociety(), "是")) {
-                profile.setSociety(true);
-                profile.setWeeklyDeduction(new BigDecimal("10.0"));
-            } else {
-                profile.setSociety(false);
-                profile.setWeeklyDeduction(new BigDecimal("0"));
-            }
-            switch (profileDTO.getEmpType()) {
-                case Constant.EmployeeType.HOURLY:
-                    profile.setSalary(MapUtil.create("hourlySalary", "40.0"));
-                    break;
-                case Constant.EmployeeType.MONTHLY:
-                    profile.setSalary(MapUtil.create("monthlySalary", "6400.0"));
-                    break;
-                case Constant.EmployeeType.SALARIED:
-                    profile.setSalary(MapUtil.create("commission", "1600.0"));
-                    break;
-                default:
-                    break;
-            }
             Employee existInDb = employeeRepository.findByEmpName(profileDTO.getEmpName());
             if (existInDb == null) {
+                // 生成员工Id
+                String empId = IdUtil.getId();
+                // 构建Employee
+                Employee employee = Employee.builder()
+                        .empId(empId)
+                        .empName(profileDTO.getEmpName())
+                        .empPassword(EncryptionUtil.encrypt("123456"))
+                        .build();
+                // 构建PaymentMethod
+                PaymentMethod paymentMethod = PaymentMethod.builder()
+                        .methodId(IdUtil.getId())
+                        .empId(empId)
+                        .build();
+                if (StringUtils.equals(profileDTO.getPaymentMethod(), Constant.PaymentMethod.CHECK_PAYMENT)) {
+                    Map<String, String> checkMap = new HashMap<>(4);
+                    checkMap.put("recipient", profileDTO.getRecipient());
+                    checkMap.put("recipientAddress", profileDTO.getRecipientAddress());
+                    checkMap.put("recipientPhone", profileDTO.getRecipientPhone());
+                    checkMap.put("remark", profileDTO.getRemark());
+                    paymentMethod.setChoice(checkMap);
+                }
+                if (StringUtils.equals(profileDTO.getPaymentMethod(), Constant.PaymentMethod.BANK_TRANSFER)) {
+                    Map<String, String> bankMap = new HashMap<>(2);
+                    bankMap.put("cardNumber", profileDTO.getBankCardNumber());
+                    bankMap.put("cardOwner", profileDTO.getBankCardOwner());
+                    paymentMethod.setChoice(bankMap);
+                }
+                // 构建Profile
+                Profile profile = Profile.builder()
+                        .profileId(IdUtil.getId())
+                        .empId(empId)
+                        .empName(profileDTO.getEmpName())
+                        .empEmail(profileDTO.getEmpEmail())
+                        .empType(profileDTO.getEmpType())
+                        .entryTime(TimeUtil.getTimestamp())
+                        .build();
+                if (StringUtils.equals(profileDTO.getSociety(), "是")) {
+                    profile.setSociety(true);
+                    profile.setWeeklyDeduction(new BigDecimal("10.0"));
+                } else {
+                    profile.setSociety(false);
+                    profile.setWeeklyDeduction(new BigDecimal("0"));
+                }
+                switch (profileDTO.getEmpType()) {
+                    case Constant.EmployeeType.HOURLY:
+                        profile.setSalary(MapUtil.create("hourlySalary", "40.0"));
+                        break;
+                    case Constant.EmployeeType.MONTHLY:
+                        profile.setSalary(MapUtil.create("monthlySalary", "6400.0"));
+                        break;
+                    case Constant.EmployeeType.SALARIED:
+                        profile.setSalary(MapUtil.create("commission", "1600.0"));
+                        break;
+                    default:
+                        break;
+                }
                 // 保存数据
                 try {
                     employeeRepository.save(employee);
