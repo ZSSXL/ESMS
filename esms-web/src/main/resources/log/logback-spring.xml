@@ -3,7 +3,7 @@
     <contextName>logback</contextName>
     <!-- 定义参数，后面可以通过${app.name}使用 -->
     <property name="app_name" value="esms_web"/>
-    <property name="log_home" value="../data/dist/log/${app_name}"/>
+    <property name="log_home" value="../data/zss/log/${app_name}"/>
     <property name="pattern" value="%d [%thread] %-5level %logger{36} [%file : %line] -%msg%n"/>
     <!-- ConsoleAppender 用于在屏幕上输入日志 -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
