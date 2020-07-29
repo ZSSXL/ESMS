@@ -34,7 +34,7 @@ public interface PayrollRecordRepository extends JpaRepository<PayrollRecord, St
      * @return Integer
      */
     @Modifying
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Query(value = "update esms_payroll_record set confirm_receipt = true where emp_id = ?1 and payroll_id = ?2 ", nativeQuery = true)
     Integer updateConfirmByEmpIdAndPayrollRecordId(String empId, String payrollRecordId);
 }
