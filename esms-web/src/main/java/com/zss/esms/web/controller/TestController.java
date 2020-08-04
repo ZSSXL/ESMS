@@ -2,6 +2,9 @@ package com.zss.esms.web.controller;
 
 import com.zss.esms.response.ServerResponse;
 import com.zss.esms.util.ExcelUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +24,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/manager/test")
+@Api(tags = "这是一个专门用来测试的Controller")
 public class TestController extends BaseController {
 
     /**
@@ -29,6 +33,7 @@ public class TestController extends BaseController {
      * @return String
      */
     @GetMapping
+    @ApiOperation("权限拦截器测试")
     public ServerResponse<String> interceptorTest() {
         System.out.println("拦截器测试...");
         return ServerResponse.createBySuccess();
@@ -41,7 +46,9 @@ public class TestController extends BaseController {
      * @return String
      */
     @PostMapping
-    public ServerResponse<String> uplodaExcelTest(MultipartFile file) throws IOException {
+    @ApiOperation("上传Excel文件测试")
+    public ServerResponse<String> uplodaExcelTest(@ApiParam(name = "file", required = true, value = "MultipartFile")
+                                                          MultipartFile file) throws IOException {
         System.out.println("Hello Manager Test : " + file.isEmpty());
         byte[] bytes = file.getBytes();
         String originalFilename = file.getOriginalFilename();

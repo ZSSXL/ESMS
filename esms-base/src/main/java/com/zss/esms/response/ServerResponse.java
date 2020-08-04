@@ -2,6 +2,8 @@ package com.zss.esms.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
@@ -11,11 +13,15 @@ import java.io.Serializable;
  * 保证序列化json的时候，如果是null的对象，key会消失
  */
 @SuppressWarnings("unused")
+@ApiModel
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServerResponse<T> implements Serializable {
 
+    @ApiModelProperty(value = "响应状态", required = true, dataType = "String")
     private final int status;
+    @ApiModelProperty(value = "响应信息", required = true, dataType = "String")
     private String msg;
+    @ApiModelProperty(value = "响应数据", required = true, dataType = "Object")
     private T data;
 
     private ServerResponse(int status) {

@@ -30,7 +30,7 @@ public class EmployeeInterceptor implements HandlerInterceptor {
         } else {
             if (TokenUtil.isValid(token)) {
                 String role = TokenUtil.getClaim(token, "role").asString();
-                if (StringUtils.equals(role, Constant.Role.MANAGER)) {
+                if (StringUtils.equals(role, Constant.Role.EMPLOYEE)) {
                     return true;
                 } else {
                     throw new PermissionException("无访问权限, 请重新尝试!!!");

@@ -7,6 +7,10 @@ import com.zss.esms.response.ServerResponse;
 import com.zss.esms.service.PayrollRecordService;
 import com.zss.esms.util.TokenUtil;
 import com.zss.esms.web.controller.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController("empPayrollRecord")
 @RequestMapping("emp/record")
 @SuppressWarnings("unused")
+@Api(tags = "工资发放记录")
 public class PayrollRecordController extends BaseController {
 
     @Reference
@@ -34,6 +39,11 @@ public class PayrollRecordController extends BaseController {
      * @return Pagenation
      */
     @GetMapping
+    @ApiOperation("员工获取自己的工资发放记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "当前页", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "每页大小", dataType = "Integer", paramType = "query")
+    })
     public ServerResponse<Pagenation> showAllRecordServiceById(
             @RequestHeader String token,
             @RequestParam(value = "page", defaultValue = Constant.DEFAULT_PAGE_NUMBER) Integer page,
@@ -55,6 +65,8 @@ public class PayrollRecordController extends BaseController {
      * @return String
      */
     @PutMapping
+    @ApiOperation("员工确认收款")
+    @ApiImplicitParam(name = "payrollRecordId", value = "记录Id", dataType = "String", required = true)
     public ServerResponse<String> confirmReceive(@RequestHeader String token,
                                                  @RequestBody String payrollRecordId) {
         String empId = TokenUtil.getClaim(token, "userId").asString();

@@ -6,6 +6,10 @@ import com.zss.esms.page.Pagenation;
 import com.zss.esms.response.ServerResponse;
 import com.zss.esms.service.PayrollRecordService;
 import com.zss.esms.web.controller.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/manager/payroll")
 @SuppressWarnings("unused")
+@Api(tags = "薪酬记录控制器")
 public class PayrollRecordController extends BaseController {
 
     @Reference
@@ -35,6 +40,11 @@ public class PayrollRecordController extends BaseController {
      * @return Pagenation
      */
     @GetMapping
+    @ApiOperation("分页查询薪资发放记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "当前页", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "每页大小", dataType = "Integer", paramType = "query")
+    })
     public ServerResponse<Pagenation> showAllPayrollRecord(
             @RequestParam(value = "page", defaultValue = Constant.DEFAULT_PAGE_NUMBER) Integer page,
             @RequestParam(value = "size", defaultValue = Constant.DEFAULT_PAGE_SIZE) Integer size) {

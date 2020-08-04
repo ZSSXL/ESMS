@@ -10,6 +10,9 @@ import com.zss.esms.service.SalesReceiptService;
 import com.zss.esms.util.TimeUtil;
 import com.zss.esms.util.TokenUtil;
 import com.zss.esms.web.controller.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -26,6 +29,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/emp/sales")
 @SuppressWarnings("unused")
+@Api(tags = "销售凭条控制器")
 public class SalesReceiptController extends BaseController {
 
     @Reference
@@ -37,6 +41,8 @@ public class SalesReceiptController extends BaseController {
      * @return String
      */
     @PostMapping
+    @ApiOperation("上传销售品条")
+    @ApiImplicitParam(name = "salesReceiptDTO", value = "销售凭条数据传输对象", dataType = "SalesReceiptDTO", required = true)
     public ServerResponse<String> uploadSalesReceipt(@RequestBody @Valid SalesReceiptDTO salesReceiptDTO,
                                                      @RequestHeader("token") String token,
                                                      BindingResult result) {

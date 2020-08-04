@@ -10,6 +10,10 @@ import com.zss.esms.service.TimeCardService;
 import com.zss.esms.util.TimeUtil;
 import com.zss.esms.util.TokenUtil;
 import com.zss.esms.web.controller.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -26,6 +30,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/emp/card")
 @SuppressWarnings("unused")
+@Api(tags = "时间卡控制器")
 public class TimeCardController extends BaseController {
 
     @Reference
@@ -38,6 +43,8 @@ public class TimeCardController extends BaseController {
      * @return String
      */
     @PostMapping
+    @ApiOperation("上传时间卡")
+    @ApiImplicitParam(name = "timeCardDTO", dataType = "TimeCardDTO", paramType = "body", required = true)
     public ServerResponse<String> uploadTimeCard(@RequestBody @Valid TimeCardDTO timeCardDTO,
                                                  @RequestHeader("token") String token,
                                                  BindingResult result) {
@@ -74,6 +81,11 @@ public class TimeCardController extends BaseController {
      * @return Pagenation
      */
     @GetMapping
+    @ApiOperation("分页获取个人的时间卡")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "当前页", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "每页大小", dataType = "Integer", paramType = "query")
+    })
     public ServerResponse<Pagenation> getTimeCardByPage(@RequestHeader String token,
                                                         @RequestParam(value = "page",
                                                                 defaultValue = Constant.DEFAULT_PAGE_NUMBER) Integer page,

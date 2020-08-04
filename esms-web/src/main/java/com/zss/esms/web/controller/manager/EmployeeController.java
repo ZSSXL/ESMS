@@ -6,6 +6,10 @@ import com.zss.esms.response.ServerResponse;
 import com.zss.esms.service.EmployeeService;
 import com.zss.esms.page.Pagenation;
 import com.zss.esms.web.controller.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +25,7 @@ import java.io.IOException;
 @SuppressWarnings("unused")
 @RestController("manangerEmpContro")
 @RequestMapping("/manager/emp")
+@Api(tags = "管理员对雇员的操作")
 public class EmployeeController extends BaseController {
 
     @Reference
@@ -33,6 +38,8 @@ public class EmployeeController extends BaseController {
      * @return String
      */
     @PostMapping
+    @ApiOperation("通过Excel文件添加员工")
+    @ApiImplicitParam(name = "excelFile", value = "Excel文件", dataType = "MuitipartFile", required = true)
     public ServerResponse<String> createEmpFromExcel(MultipartFile excelFile) {
         if (excelFile == null) {
             return ServerResponse.createByErrorMessage("参数不能为空");
@@ -59,6 +66,11 @@ public class EmployeeController extends BaseController {
      * @return String
      */
     @GetMapping
+    @ApiOperation("获取所有的员工信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "当前页", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "每页大小", dataType = "Integer", paramType = "query")
+    })
     public ServerResponse<Pagenation> getAllEmployee(@RequestParam(value = "page", defaultValue = Constant.DEFAULT_PAGE_NUMBER) Integer page,
                                                      @RequestParam(value = "size", defaultValue = Constant.DEFAULT_PAGE_SIZE) Integer size) {
         Pagenation profiles = employeeService.showAllEmployees(page, size);

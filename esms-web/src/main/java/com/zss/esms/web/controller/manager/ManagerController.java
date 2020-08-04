@@ -10,6 +10,9 @@ import com.zss.esms.util.MapUtil;
 import com.zss.esms.util.TokenUtil;
 import com.zss.esms.web.controller.BaseController;
 import com.zss.esms.web.util.GeneralConverter;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -27,6 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/manager")
 @SuppressWarnings("unused")
+@Api(tags = "管理员Controller")
 public class ManagerController extends BaseController {
 
     @Reference
@@ -46,6 +50,8 @@ public class ManagerController extends BaseController {
      * @return String
      */
     @PostMapping("/login")
+    @ApiOperation("管理员登录")
+    @ApiImplicitParam(name = "loginDTO", value = "登录数据传输", required = true, dataType = "LoginDTO", paramType = "body")
     public ServerResponse<String> managerLogin(@RequestBody @Valid LoginDTO loginDTO, BindingResult result) {
         if (result.hasErrors()) {
             return ServerResponse.createByErrorMessage("用户名或密码不能为空");
@@ -70,6 +76,8 @@ public class ManagerController extends BaseController {
      * @return String
      */
     @PostMapping("/create")
+    @ApiOperation("添加新的管理员")
+    @ApiImplicitParam(name = "loginDTO", value = "登录数据传输", required = true, dataType = "LoginDTO", paramType = "body")
     public ServerResponse<String> createManager(@RequestBody @Valid LoginDTO loginDTO, BindingResult result) {
         if (result.hasErrors()) {
             return ServerResponse.createByErrorMessage("用户名或密码不能为空");
@@ -96,6 +104,7 @@ public class ManagerController extends BaseController {
      */
     @Deprecated
     @GetMapping("/show")
+    @ApiOperation("查看所有的管理员信息 - 已过时")
     public ServerResponse<List<LoginDTO>> showAllMananger() {
         List<Manager> allManager = managerService.getAllManager();
         List<LoginDTO> converter = generalConverter.converter(allManager, LoginDTO.class);

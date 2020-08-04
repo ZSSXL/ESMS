@@ -9,6 +9,9 @@ import com.zss.esms.service.EmployeeService;
 import com.zss.esms.util.MapUtil;
 import com.zss.esms.util.TokenUtil;
 import com.zss.esms.web.controller.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +30,7 @@ import javax.validation.Valid;
 @RestController("empContro")
 @RequestMapping("/emp")
 @SuppressWarnings("unused")
+@Api(tags = "雇员控制器")
 public class EmployeeController extends BaseController {
 
     @Reference
@@ -40,6 +44,8 @@ public class EmployeeController extends BaseController {
      * @return String
      */
     @PostMapping("/login")
+    @ApiOperation("雇员登录")
+    @ApiImplicitParam(name = "loginDTO", value = "登录数据", dataType = "LoginDTO", required = true)
     public ServerResponse<String> empLogin(@RequestBody @Valid LoginDTO loginDTO, BindingResult result) {
         if (result.hasErrors()) {
             return ServerResponse.createByErrorMessage("用户名或密码不能为空");
