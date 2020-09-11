@@ -1,18 +1,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://code.alibabatech.com/schema/dubbo
-       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:property-placeholder location="classpath:application-*.yml" ignore-unresolvable="true"/>
 
-    <dubbo:application name="esms-provider"/>
+    <dubbo:application name="${dubbo.application.name}"/>
     <!-- 注册中心的IP地址 -->
-    <dubbo:registry address="zookeeper://60.205.179.156:2181" file="N/A"/>
+    <dubbo:registry address="${dubbo.zookeeper.address}" file="${dubbo.zookeeper.file}" timeout="100000"/>
     <!-- 扫描注解包路径 -->
-    <dubbo:annotation package="com.zss.esms.service"/>
+    <dubbo:annotation package="${dubbo.annotation.package}"/>
     <!-- dubbo协议缺省端口20880，多个提供者会冲突 -->
-    <dubbo:protocol name="dubbo" port="20888"/>
+    <dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}"/>
 
-    <dubbo:provider version="1.0.1" timeout="300000"/>
+    <dubbo:provider version="${dubbo.provider.version}" timeout="${dubbo.provider.timeout}"/>
 </beans>

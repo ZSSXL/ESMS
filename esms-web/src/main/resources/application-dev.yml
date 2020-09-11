@@ -18,3 +18,16 @@ spring:
     username: esms_admin
     password: esms_admin
     driver-class-name: org.postgresql.Driver
+
+dubbo:
+  application:
+    name: esms-consumer
+  zookeeper:
+    address: zookeeper://127.0.0.1:2181
+    file: N/A
+  annotation:
+    package: com.zss.esms.web
+  consumer:
+    version: 1.0.1
+    timeout: 300000
+    check: false
