@@ -1,6 +1,7 @@
-spring:
-  profiles:
-    active: prod
+# spring:
+  # profiles:
+    # active: @profiles.active@
+# 在启动参数中添加  --spring.profiles.active=dev
 
 server:
   port: 8889
