@@ -21,8 +21,11 @@
         <jdk.version>1.8</jdk.version>
         <jackson.version>2.10.0</jackson.version>
         <lombok.version>1.18.12</lombok.version>
-        <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
-        <dubbo.version>3.0.1</dubbo.version>
+        <!--<spring-boot.version>2.2.5.RELEASE</spring-boot.version>
+        <dubbo.version>3.0.1</dubbo.version>-->
+        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
+        <dubbo.version>2.6.9</dubbo.version>
+        <curator.version>2.12.0</curator.version>
         <zookeeper.version>3.6.1</zookeeper.version>
         <zkclient.version>0.10</zkclient.version>
         <javassist.version>3.18.2-GA</javassist.version>
@@ -40,6 +43,27 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.zss.sub</groupId>
+                <artifactId>sub-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zss.sub</groupId>
+                <artifactId>sub-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zss.sub</groupId>
+                <artifactId>sub-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
@@ -77,6 +101,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-mongodb</artifactId>
                 <version>${spring-boot.version}</version>
+            </dependency>
+            <!-- Spring Boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <!-- Dubbo依赖 -->

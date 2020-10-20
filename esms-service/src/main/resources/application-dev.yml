@@ -26,7 +26,7 @@ dubbo:
     address: zookeeper://127.0.0.1:2181
     file: N/A
   annotation:
-    package: com.zss.esms.service
+    package: com.zss
   protocol:
     name: dubbo
     port: 20888

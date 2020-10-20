@@ -20,6 +20,19 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.zss.sub</groupId>
+            <artifactId>sub-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zss.sub</groupId>
+            <artifactId>sub-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.zss</groupId>
             <artifactId>esms-base</artifactId>
             <version>${project.version}</version>

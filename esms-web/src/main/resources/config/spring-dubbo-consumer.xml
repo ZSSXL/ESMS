@@ -12,7 +12,7 @@
 
     <dubbo:application name="${dubbo.application.name}"/>
     <!-- 注册中心的IP地址 -->
-    <dubbo:registry address="${dubbo.zookeeper.address}" file="${dubbo.zookeeper.file}" timeout="100000"/>
+    <dubbo:registry address="${dubbo.zookeeper.address}" file="${dubbo.zookeeper.file}" timeout="500000"/>
     <!-- 扫描注解包路径 -->
     <dubbo:annotation package="${dubbo.annotation.package}"/>
 

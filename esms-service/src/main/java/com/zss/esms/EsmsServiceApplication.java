@@ -2,6 +2,7 @@ package com.zss.esms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.context.annotation.ImportResource;
  * @date 2020/7/13 14:08
  * @desc esms service - 启动类
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.zss.esms", "com.zss.sub"})
 @ImportResource("classpath:config/spring-dubbo-provider.xml")
 public class EsmsServiceApplication {
 

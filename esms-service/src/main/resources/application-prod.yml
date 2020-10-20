@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://192.168.2.128:30017/esms
+      uri: mongodb://192.168.2.200:30017/esms
 
   jpa:
     database: postgresql
@@ -14,16 +14,19 @@ spring:
     open-in-view: false
 
   datasource:
-    url: jdbc:postgresql://192.168.2.128:30432/master
+    url: jdbc:postgresql://192.168.2.200:30432/master
     username: dba
     password: pg_pass
     driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 60000
+      idle-timeout: 60000
 
 dubbo:
   application:
     name: esms-provider
   zookeeper:
-    address: zookeeper://192.168.2.128:32181
+    address: zookeeper://192.168.2.200:32181
     file: N/A
   annotation:
     package: com.zss.esms.service

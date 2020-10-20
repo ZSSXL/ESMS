@@ -69,6 +69,28 @@ public class SwaggerConfig {
         return build.globalOperationParameters(globalOperation());
     }
 
+    @Bean
+    public Docket apiSub() {
+        Docket build = new Docket(DocumentationType.SWAGGER_2)
+                // 添加api详情信息，参数为ApiInfo类型的参数，
+                // 这个参数包含了第二部分的所有信息比如标题、描述、版本之类的，开发中一般都会自定义这些信息
+                .apiInfo(apiInfo())
+                // 配置是否启用Swagger，如果是false，在浏览器将无法访问，默认是true
+                .enable(true)
+                // 启动用于api选择的构建器
+                .select()
+                // 添加过滤条件 - 选择所有
+                // 也可 RequestHandlerSelectors.basePackage("com.zss.emsm.web.controller")
+                // 或者 RequestHandlerSalectors.any()
+                .apis(RequestHandlerSelectors.basePackage("com.zss.sub.web"))
+                // 这里是控制哪些路径的api会被显示出来
+                .paths(PathSelectors.any())
+                .build();
+        // 分组名称
+        build.groupName("sub_controller");
+        return build.globalOperationParameters(globalOperation());
+    }
+
     /**
      * 配置swagger页面的头部
      *
