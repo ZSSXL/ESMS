@@ -1,10 +1,12 @@
-# spring:
-#   profiles:
-#     active: prod
+spring:
+  profiles:
+    active: dev
 # 在启动参数中添加  --spring.profiles.active=dev
 
 server:
   port: 8890
+  servlet:
+    context-path: /web
 
 logging:
   config: classpath:log/logback-spring.xml
